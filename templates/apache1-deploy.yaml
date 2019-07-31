@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dep-vert-{{ .Release.Name }}
+  namespace: {{ .Values.nameSpace }}
+spec:
+  replicas: {{ .Values.apache1.container.replicaCount }}
+  selector:
+    matchLabels:
+        app: app-marron-{{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: app-marron-{{ .Release.Name }}
+    spec:
+      hostname: marron
+      containers:
+      - name: {{ .Values.apache1.container.name }}
+        image: {{ .Values.apache1.container.image }}:{{ .Values.apache1.container.tag }}
+        ports:
+        - containerPort: {{ .Values.apache1.container.port }}
+

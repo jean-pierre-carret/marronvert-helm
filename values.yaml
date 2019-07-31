@@ -1,0 +1,30 @@
+# Default values for ora.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+nameSpace: blog
+
+nginx:
+ container:
+    name: nginx
+    image: docker.io/jpcarret/docker_nginx
+    tag: latest
+    port: 80
+    replicaCount: 3
+    
+apache1:
+ container:
+    name: apache1
+    image: docker.io/jpcarret/docker_apache1
+    tag: latest
+    port: 80
+    replicaCount: 3
+
+apache2:
+ container:
+    name: apache2
+    image: docker.io/jpcarret/docker_apache2
+    tag: latest
+    port: 80
+    replicaCount: 3

@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dep-nginx-{{ .Release.Name }}
+  namespace: {{ .Values.nameSpace }}
+spec:
+  replicas:  {{ .Values.nginx.container.replicaCount }} 
+  selector:
+    matchLabels:
+        app: app-marronvert-{{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: app-marronvert-{{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Values.nginx.container.name }}
+        image: {{ .Values.nginx.container.image }}:{{ .Values.nginx.container.tag }}
+        ports:
+        - containerPort: {{ .Values.nginx.container.port }}
+        volumeMounts:
+          - name: nginx-config
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: cm-{{ .Release.Name }}

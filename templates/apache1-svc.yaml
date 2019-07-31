@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-marron-{{ .Release.Name }}
+  namespace: {{ .Values.nameSpace }}
+spec:
+  clusterIP: None
+  selector:
+    app: app-marron-{{ .Release.Name }}
+  ports:
+    - name: marron 
+      protocol: TCP
+      port: {{ .Values.apache1.container.port }}
+      targetPort: {{ .Values.apache1.container.port }}
